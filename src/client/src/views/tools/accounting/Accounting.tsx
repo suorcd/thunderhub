@@ -27,12 +27,14 @@ type ReportType =
 // type FiatType = 'eur' | 'usd';
 type YearType = 2017 | 2018 | 2019 | 2020 | 2021 | 2022;
 type MonthType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | null;
+type DayType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | null;
 
 type StateType = {
   type: ReportType;
   // fiat?: FiatType;
   year?: YearType;
   month?: MonthType;
+  day?: DayType;
 };
 
 export type ActionType =
@@ -51,6 +53,10 @@ export type ActionType =
   | {
       type: 'month';
       month: MonthType;
+    }
+  | {
+      type: 'day';
+      day: DayType;
     };
 
 const initialState: StateType = {
@@ -70,6 +76,8 @@ const reducer = (state: StateType, action: ActionType): StateType => {
       return { ...state, year: action.year };
     case 'month':
       return { ...state, month: action.month };
+    case 'day':
+      return { ...state, day: action.day };
     default:
       return state;
   }
@@ -127,6 +135,15 @@ export const Accounting = () => {
     </SingleButton>
   );
 
+  const dayButton = (day: DayType) => (
+    <SingleButton
+      selected={state.month === day}
+      onClick={() => !loading && dispatch({ type: 'day', day })}
+    >
+      {day ? day : 'All'}
+    </SingleButton>
+  );
+
   const renderDetails = () => (
     <>
       <Separation />
@@ -175,6 +192,30 @@ export const Accounting = () => {
           {monthButton(10)}
           {monthButton(11)}
           {monthButton(12)}
+        </MultiButton>
+      </ToolsResponsiveLine>
+      <ToolsResponsiveLine>
+        <DarkSubTitle>Day</DarkSubTitle>
+        <MultiButton>
+          {dayButton(null)}
+          {dayButton(1)}
+          {dayButton(2)}
+          {dayButton(3)}
+          {dayButton(4)}
+          {dayButton(5)}
+          {dayButton(6)}
+          {dayButton(7)}
+          {dayButton(8)}
+          {dayButton(9)}
+          {dayButton(10)}
+          {dayButton(11)}
+          {dayButton(12)}
+          {dayButton(13)}
+          {dayButton(14)}
+          {dayButton(15)}
+          {dayButton(16)}
+          {dayButton(17)}
+          {dayButton(18)}
         </MultiButton>
       </ToolsResponsiveLine>
       <ColorButton
